@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/list">
+
+        <Button
+            android:id="@+id/btn_locate_my_friend"
+
+            android:text="Locate my friend"
+            android:textColor="#F51D5E"
+            android:textSize="25sp"
+
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/button_shape_rect"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            />
+
+    <Button
+        android:id="@+id/btn_friends_near_by"
+
+        android:text="Friends near by"
+        android:textColor="#F51D5E"
+        android:textSize="25sp"
+
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/button_shape_rect"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        />
+
+    </LinearLayout>
+
+
