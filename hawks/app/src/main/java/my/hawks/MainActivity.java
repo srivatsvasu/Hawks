@@ -75,22 +75,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         startActivity(new Intent(this, activityClass));
     }
 
-    public void postMyLocation(MapEntity entity){
-        HttpManager.postData(entity);
-    }
-
     public LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            MapEntity entity = new MapEntity();
-            entity.setUserId("");
-            entity.setUserName("");
-            entity.setLatitude(location.getLatitude());
-            entity.setLongitude(location.getLongitude());
-
-            postMyLocation(entity);
-
+            LatLng latlong = new LatLng(location.getLatitude(),
+                    location.getLongitude());
             Log.d(TAG, "Entering location lat :" + location.getLatitude() + " lng:" + location.getLongitude());
+            //  System.out.println("Entering location lat :" + location.getLatitude() + " lng:" + location.getLongitude());
         }
 
         @Override
