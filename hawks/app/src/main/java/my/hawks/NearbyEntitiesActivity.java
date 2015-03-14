@@ -31,6 +31,7 @@ public class NearbyEntitiesActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby_entities_maps);
         setUpMapIfNeeded();
+        AccountUtil.getMyAccount(this);
     }
 
     @Override
@@ -172,8 +173,8 @@ public class NearbyEntitiesActivity extends FragmentActivity {
     };
 
     public List<MapEntity> getEntityLocations() {
-
-        return HttpManager.getEntityLocations(mapEntiy.getId());
+       // mapEntiy.setId();
+        return HttpManager.getEntityLocations(mapEntiy);
 
     }
 
