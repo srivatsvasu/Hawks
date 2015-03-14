@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FriendsNearMe</string>
+    <string name="title_activity_maps">FriendsNearMe</string>
+    <string name="title_activity_find_entity">FindEntity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_google_play_services">GooglePlayServicesActivity</string>
+    <string name="title_activity_map_entity">Hawks</string>
+    <string name="title_activity_main">MainActivity</string>
+</resources>
