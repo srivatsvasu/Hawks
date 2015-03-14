@@ -30,7 +30,7 @@ public class HttpManager {
 
             JSONObject jsonobj = new JSONObject();
             jsonobj.put("UserId", entity.getUserId());
-            jsonobj.put("name", entity.getUserName());
+            jsonobj.put("UserName", entity.getUserName());
             jsonobj.put("Latitude", entity.getLatitude());
             jsonobj.put("NearMiles", entity.getNearMile());
             pairs.add(new BasicNameValuePair("findMyFriends", jsonobj.toString()));
