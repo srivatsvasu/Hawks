@@ -2,29 +2,31 @@ package my.hawks;
 
 import android.net.NetworkInfo;
 
+import org.json.JSONObject;
+
 /**
  * Created by VINODHIVYA on 3/14/2015.
  */
 public class BackGroundToDo {
 
-    private MapEntity mapEntity;
-    private String serviceMethodCall;
+    private JSONObject inputJSONObj;
+    private String serviceURL;
     private NetworkInfo networkInfo;
 
-    public MapEntity getMapEntity() {
-        return mapEntity;
+    public JSONObject getInputJSONObj() {
+        return inputJSONObj;
     }
 
-    public void setMapEntity(MapEntity mapEntity) {
-        this.mapEntity = mapEntity;
+    public void setInputJSONObj(JSONObject inputJSONObj) {
+        this.inputJSONObj = inputJSONObj;
     }
 
-    public String getServiceMethodCall() {
-        return serviceMethodCall;
+    public String getServiceURL() {
+        return serviceURL;
     }
 
-    public void setServiceMethodCall(String serviceMethodCall) {
-        this.serviceMethodCall = serviceMethodCall;
+    public void setServiceURL(String serviceURL) {
+        this.serviceURL = serviceURL;
     }
 
     public NetworkInfo getNetworkInfo() {

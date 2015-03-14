@@ -89,20 +89,16 @@ public class HttpManager {
         return entities;
     }
 
-    public static void postData(MapEntity entity) {
+    public static String callWebService(String url, JSONObject jsonobj) {
+
+        String responseText = null;
+
         try {
 
-            Log.d(TAG, "postData");
+            Log.d(TAG, "callWebService");
             HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost("http://javagrasp.info/hawks/postMyLoc/postIt");
+            HttpPost post = new HttpPost(url);
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-
-
-            JSONObject jsonobj = new JSONObject();
-            jsonobj.put("UserName", entity.getUserName());
-            jsonobj.put("UserID", entity.getUserId());
-            jsonobj.put("Latitude", entity.getLatitude().toString());
-            jsonobj.put("Longitude", entity.getLongitude().toString());
 
             pairs.add(new BasicNameValuePair("latLongData", jsonobj.toString()));
 
@@ -115,91 +111,13 @@ public class HttpManager {
 
 
             HttpResponse httpresponse = client.execute(post);
-            String responseText = EntityUtils.toString(httpresponse.getEntity());
+            responseText = EntityUtils.toString(httpresponse.getEntity());
             Log.d(TAG, "postData - Complete: " + responseText);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-
-    public static ArrayList<MapEntity> getAllMyFriends(String userId){
-        ArrayList<MapEntity> friendsList = null;
-
-        HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost("");
-        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        JSONObject jsonobj = new JSONObject();
-        JSONArray jsonArray = null;
-        MapEntity entity = null;
-
-        try{
-
-            jsonobj.put("UserID", userId);
-            pairs.add(new BasicNameValuePair("latLongData", jsonobj.toString()));
-
-            post.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-
-            HttpResponse httpresponse = client.execute(post);
-
-            String responseText = EntityUtils.toString(httpresponse.getEntity());
-
-            if(responseText != null){
-                jsonArray = new JSONArray(responseText);
-                friendsList = new ArrayList<MapEntity>();
-            }
-
-            for(int i=0; i<jsonArray.length(); i++){
-                entity = new MapEntity();
-                entity.setUserName(jsonArray.getJSONObject(i).getString("UserName"));
-                entity.setUserId(jsonArray.getJSONObject(i).getString("UserId"));
-                friendsList.add(entity);
-            }
-
-
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return friendsList;
-    }
-
-    public static MapEntity getMyFriendLocation(String friendUserId){
-        MapEntity friendEntity = null;
-
-        HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost("");
-        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        JSONObject jsonobj = new JSONObject();
-        JSONArray jsonArray = null;
-        MapEntity entity = null;
-
-        try{
-
-            jsonobj.put("UserID", friendUserId);
-            pairs.add(new BasicNameValuePair("latLongData", jsonobj.toString()));
-
-            post.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-
-            HttpResponse httpresponse = client.execute(post);
-
-            String responseText = EntityUtils.toString(httpresponse.getEntity());
-
-            if(responseText != null){
-                jsonArray = new JSONArray(responseText);
-                friendEntity = new MapEntity();
-                friendEntity.setUserName(jsonArray.getJSONObject(0).getString("UserName"));
-                friendEntity.setUserId(jsonArray.getJSONObject(0).getString("UserID"));
-                friendEntity.setUserName(jsonArray.getJSONObject(0).getString("Latitude"));
-                friendEntity.setUserId(jsonArray.getJSONObject(0).getString("Longitude"));
-            }
-
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return friendEntity;
+        return responseText;
     }
 
 }

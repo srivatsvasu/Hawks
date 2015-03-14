@@ -51,12 +51,7 @@ public class ServiceUtil {
         protected String doInBackground(BackGroundToDo... params) {
 
             Log.d(TAG, "doInBackground");
-            if(params[0].getServiceMethodCall().equals("postMyLocation")){
-                HttpManager.postData(params[0].getMapEntity());
-            } /*else if(params[0].getServiceMethodCall().equals("postMyLocation")){
-                HttpManager.postData(params[0].getMapEntity());
-            }*/
-
+            outputData = HttpManager.callWebService(params[0].getServiceURL(), params[0].getInputJSONObj());
             return outputData;
         }
 
