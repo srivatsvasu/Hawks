@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import org.json.JSONObject;
+
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
     private ViewGroup mListView;
     private static MapEntity entity = null;
@@ -49,14 +51,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         setListener(R.id.btn_locate_my_friend, LocateMyFriendActivity.class);
         setListener(R.id.btn_friends_near_by, NearbyEntitiesActivity.class);
-        /*addDemo("Clustering: Custom Look", CustomMarkerClusteringDemoActivity.class);
-        addDemo("Clustering: 2K markers", BigClusteringDemoActivity.class);
-        addDemo("PolyUtil.decode", PolyDecodeDemoActivity.class);
-        addDemo("IconGenerator", IconGeneratorDemoActivity.class);
-        addDemo("SphericalUtil.computeDistanceBetween", DistanceDemoActivity.class);
-        addDemo("Generating tiles", TileProviderAndProjectionDemo.class);
-        addDemo("Heatmaps", HeatmapsDemoActivity.class);
-        addDemo("Heatmaps with Places API", HeatmapsPlacesDemoActivity.class);*/
     }
 
     private void setListener(int id, Class<? extends Activity> activityClass) {
@@ -84,11 +78,23 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     public void postMyLocation(MapEntity entity){
         Log.d(TAG, "postMyLocation");
-        BackGroundToDo toDo = new BackGroundToDo();
-        toDo.setServiceMethodCall("postMyLocation");
-        toDo.setMapEntity(entity);
-        toDo.setNetworkInfo(netInfo);
-        String outputData = new ServiceUtil().callWebService(toDo);
+        JSONObject jsonobj = new JSONObject();
+
+        try{
+            jsonobj.put("UserName", entity.getUserName());
+            jsonobj.put("UserID", entity.getUserId());
+            jsonobj.put("Latitude", entity.getLatitude().toString());
+            jsonobj.put("Longitude", entity.getLongitude().toString());
+
+            BackGroundToDo toDo = new BackGroundToDo();
+            toDo.setServiceURL("http://javagrasp.info/hawks/postMyLoc/postIt");
+            toDo.setInputJSONObj(jsonobj);
+            toDo.setNetworkInfo(netInfo);
+            String outputData = new ServiceUtil().callWebService(toDo);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public LocationListener locationListener = new LocationListener() {
