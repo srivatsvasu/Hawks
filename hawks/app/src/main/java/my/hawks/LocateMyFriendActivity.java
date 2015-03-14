@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.Button;
 
 public class LocateMyFriendActivity extends ActionBarActivity implements View.OnClickListener {
     private ViewGroup mFriendsListView;
+    private static final String TAG = "LocateMyFriendActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +20,9 @@ public class LocateMyFriendActivity extends ActionBarActivity implements View.On
         setContentView(R.layout.activity_locate_my_friend);
 
         mFriendsListView = (ViewGroup) findViewById(R.id.friendList);
+
+        String userId = getIntent().getExtras().getString("UserId");
+
         addModule("Arun", LocateMyFriendMapActivity.class);
         addModule("Vinodh", LocateMyFriendMapActivity.class);
         addModule("Srivatz", LocateMyFriendMapActivity.class);
@@ -41,4 +46,5 @@ public class LocateMyFriendActivity extends ActionBarActivity implements View.On
         intent.putExtra("userId", "G Arun");
         startActivity(intent);
     }
+
 }

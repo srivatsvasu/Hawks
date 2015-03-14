@@ -1,13 +1,13 @@
 package my.hawks;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -15,17 +15,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.google.android.gms.maps.model.LatLng;
-
-
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
     private ViewGroup mListView;
-    private static final String TAG = "MainClassss";
+    private static MapEntity entity = null;
+    private NetworkInfo netInfo;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        entity =  AccountUtil.getMyAccount(this);
 
         // Set up the action bar.
         //final ActionBar actionBar = getActionBar();
@@ -38,7 +39,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, locationListener);
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 0, locationListener);
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 30000, 0, locationListener);
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        netInfo = cm.getActiveNetworkInfo();
 
         mListView = (ViewGroup) findViewById(R.id.list);
 
@@ -72,19 +77,23 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         Class activityClass = (Class) view.getTag();
-        startActivity(new Intent(this, activityClass));
+        Intent intent = new Intent(this, activityClass);
+        intent.putExtra("UserId", entity.getUserId());
+        startActivity(intent);
     }
 
     public void postMyLocation(MapEntity entity){
-        HttpManager.postData(entity);
+        Log.d(TAG, "postMyLocation");
+        BackGroundToDo toDo = new BackGroundToDo();
+        toDo.setServiceMethodCall("postMyLocation");
+        toDo.setMapEntity(entity);
+        toDo.setNetworkInfo(netInfo);
+        String outputData = new ServiceUtil().callWebService(toDo);
     }
 
     public LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            MapEntity entity = new MapEntity();
-            entity.setUserId("");
-            entity.setUserName("");
             entity.setLatitude(location.getLatitude());
             entity.setLongitude(location.getLongitude());
 
