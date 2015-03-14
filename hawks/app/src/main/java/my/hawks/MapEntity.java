@@ -13,11 +13,9 @@ public class MapEntity {
 
     private Double longitude;
 
-    private String userId;
+    private String id;
 
     private String userName;
-
-    private String nearMile;
 
     public Double getLatitude() {
         return latitude;
@@ -35,12 +33,12 @@ public class MapEntity {
         this.longitude = longitude;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getId() {
+        return id;
     }
 
-    public void setUserId(String id) {
-        this.userId = userId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public LatLng getPosition() {
@@ -58,13 +56,5 @@ public class MapEntity {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getNearMile() {
-        return nearMile;
-    }
-
-    public void setNearMile(String nearMile) {
-        this.nearMile = nearMile;
     }
 }
