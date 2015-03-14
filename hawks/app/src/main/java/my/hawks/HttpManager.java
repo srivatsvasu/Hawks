@@ -1,5 +1,7 @@
 package my.hawks;
 
+import android.util.Log;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -19,6 +21,7 @@ import java.util.List;
  */
 public class HttpManager {
 
+    private static final String TAG = "HttpManager";
 
     public static List<MapEntity> getEntityLocations(MapEntity entity) {
         List<MapEntity> entities = new ArrayList<MapEntity>();
@@ -29,7 +32,7 @@ public class HttpManager {
 
 
             JSONObject jsonobj = new JSONObject();
-            jsonobj.put("UserId", entity.getUserId());
+            jsonobj.put("UserID", entity.getUserId());
             jsonobj.put("UserName", entity.getUserName());
             jsonobj.put("Latitude", entity.getLatitude());
             jsonobj.put("NearMiles", entity.getNearMile());
@@ -88,16 +91,18 @@ public class HttpManager {
 
     public static void postData(MapEntity entity) {
         try {
+
+            Log.d(TAG, "postData");
             HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost("");
+            HttpPost post = new HttpPost("http://javagrasp.info/hawks/postMyLoc/postIt");
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 
 
             JSONObject jsonobj = new JSONObject();
             jsonobj.put("UserName", entity.getUserName());
-            jsonobj.put("UserId", entity.getUserId());
-            jsonobj.put("Latitude", entity.getLatitude());
-            jsonobj.put("Longitude", entity.getLongitude());
+            jsonobj.put("UserID", entity.getUserId());
+            jsonobj.put("Latitude", entity.getLatitude().toString());
+            jsonobj.put("Longitude", entity.getLongitude().toString());
 
             pairs.add(new BasicNameValuePair("latLongData", jsonobj.toString()));
 
@@ -110,12 +115,9 @@ public class HttpManager {
 
 
             HttpResponse httpresponse = client.execute(post);
+            String responseText = EntityUtils.toString(httpresponse.getEntity());
+            Log.d(TAG, "postData - Complete: " + responseText);
 
-
-            String responseText = null;
-
-            responseText = EntityUtils.toString(httpresponse.getEntity());
-            System.out.println(responseText);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -134,7 +136,7 @@ public class HttpManager {
 
         try{
 
-            jsonobj.put("UserId", userId);
+            jsonobj.put("UserID", userId);
             pairs.add(new BasicNameValuePair("latLongData", jsonobj.toString()));
 
             post.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
@@ -175,7 +177,7 @@ public class HttpManager {
 
         try{
 
-            jsonobj.put("UserId", friendUserId);
+            jsonobj.put("UserID", friendUserId);
             pairs.add(new BasicNameValuePair("latLongData", jsonobj.toString()));
 
             post.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
@@ -188,7 +190,7 @@ public class HttpManager {
                 jsonArray = new JSONArray(responseText);
                 friendEntity = new MapEntity();
                 friendEntity.setUserName(jsonArray.getJSONObject(0).getString("UserName"));
-                friendEntity.setUserId(jsonArray.getJSONObject(0).getString("UserId"));
+                friendEntity.setUserId(jsonArray.getJSONObject(0).getString("UserID"));
                 friendEntity.setUserName(jsonArray.getJSONObject(0).getString("Latitude"));
                 friendEntity.setUserId(jsonArray.getJSONObject(0).getString("Longitude"));
             }
