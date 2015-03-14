@@ -67,4 +67,11 @@ public class MapEntity {
     public void setNearMile(String nearMile) {
         this.nearMile = nearMile;
     }
+
+    public void setPosition(LatLng latlong) {
+
+        this.latitude = latlong.latitude;
+        this.longitude = latlong.longitude;
+    }
 }
+

@@ -24,14 +24,14 @@ public class NearbyEntitiesActivity extends FragmentActivity {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     MapEntity items;
     private static final String TAG = "FindFriends";
-    private MapEntity mapEntiy = new MapEntity();
+    private MapEntity mapEntiy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby_entities_maps);
         setUpMapIfNeeded();
-        AccountUtil.getMyAccount(this);
+        mapEntiy = AccountUtil.getMyAccount(this);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class NearbyEntitiesActivity extends FragmentActivity {
         Log.d(TAG, "Init location lat :");
 
 
-       lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         location = lm.getLastKnownLocation(Context.LOCATION_SERVICE);
 
         if (location != null) {
@@ -107,6 +107,7 @@ public class NearbyEntitiesActivity extends FragmentActivity {
 
 
     LocationManager lm;
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -143,6 +144,8 @@ public class NearbyEntitiesActivity extends FragmentActivity {
             builder = new LatLngBounds.Builder();
             latlong = new LatLng(location.getLatitude(),
                     location.getLongitude());
+            mapEntiy.setPosition(latlong);
+            mapEntiy.setNearMile("50");
             Log.d(TAG, "Entering location lat :" + location.getLatitude() + " lng:" + location.getLongitude());
             mMap.addMarker(new MarkerOptions().position(latlong).title("You are here")
 
@@ -173,7 +176,7 @@ public class NearbyEntitiesActivity extends FragmentActivity {
     };
 
     public List<MapEntity> getEntityLocations() {
-       // mapEntiy.setId();
+        // mapEntiy.setId();
         return HttpManager.getEntityLocations(mapEntiy);
 
     }

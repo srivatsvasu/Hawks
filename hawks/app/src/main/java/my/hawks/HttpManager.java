@@ -22,22 +22,22 @@ import java.util.List;
 public class HttpManager {
 
 
-    public static List<MapEntity> getEntityLocations (String userId){
+    public static List<MapEntity> getEntityLocations(MapEntity entity) {
         List<MapEntity> entities = new ArrayList<MapEntity>();
         try {
-     /*       HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost(uri);
+            HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost("");
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 
 
             JSONObject jsonobj = new JSONObject();
-            jsonobj.put("UserName", email);
-            jsonobj.put("Latitude", lat);
-            jsonobj.put("Longitude", lon);
+            jsonobj.put("UserId", entity.getUserId());
+            jsonobj.put("name", entity.getUserName());
+            jsonobj.put("Latitude", entity.getLatitude());
+            jsonobj.put("NearMiles", entity.getNearMile());
+            pairs.add(new BasicNameValuePair("findMyFriends", jsonobj.toString()));
 
-            pairs.add(new BasicNameValuePair("latLongData", jsonobj.toString()));
-
-            post.setEntity(new UrlEncodedFormEntity(pairs,"UTF-8"));
+            post.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
 
 
             HttpResponse httpresponse = client.execute(post);
@@ -45,8 +45,9 @@ public class HttpManager {
 
             String responseText = null;
 
-            responseText = EntityUtils.toString(httpresponse.getEntity());*/
+            responseText = EntityUtils.toString(httpresponse.getEntity());
 
+          /*
             MapEntity entity1 = new MapEntity();
             entity1.setId("1");
             entity1.setUserName("Arun");
@@ -77,7 +78,7 @@ public class HttpManager {
             entities.add(entity3);
             entities.add(entity4);
 
-
+*/
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,7 +102,7 @@ public class HttpManager {
 
             pairs.add(new BasicNameValuePair("latLongData", jsonobj.toString()));
 
-            post.setEntity(new UrlEncodedFormEntity(pairs,"UTF-8"));
+            post.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
           /*  StringEntity se = new StringEntity(jsonobj.toString());
             post.setContentType("application/json;charset=UTF-8");
             se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));*/

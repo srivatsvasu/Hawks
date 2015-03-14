@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
     private ViewGroup mListView;
     private static final String TAG = "MainClassss";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +81,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             LatLng latlong = new LatLng(location.getLatitude(),
                     location.getLongitude());
             Log.d(TAG, "Entering location lat :" + location.getLatitude() + " lng:" + location.getLongitude());
-          //  System.out.println("Entering location lat :" + location.getLatitude() + " lng:" + location.getLongitude());
+            //  System.out.println("Entering location lat :" + location.getLatitude() + " lng:" + location.getLongitude());
         }
 
         @Override

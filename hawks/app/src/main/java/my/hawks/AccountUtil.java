@@ -18,8 +18,8 @@ public class AccountUtil {
             String acname = ac.name;
             String actype = ac.type;
             if (actype.equals("com.google")) {
-                mapEntity.setId(ac.name);
-                mapEntity.setUserName(ac.name.length()>5?ac.name.substring(0,5):"Unknown");
+                mapEntity.setUserId(ac.name);
+                mapEntity.setUserName(ac.name.length() > 5 ? ac.name.substring(0, 5) : "Unknown");
                 break;
             }
         }
